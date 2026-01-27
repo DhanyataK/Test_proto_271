@@ -1,0 +1,249 @@
+/* Submodel GRAV0DXS skeleton created by AME Submodel editing utility
+   Mon Mar 3 12:14:03 2025 */
+
+
+
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include "ameutils.h"
+/* *******************************************************************************
+TITLE : GRAV0
+------------------------------------------------------------------------------
+DESCRIPTION :
+ 
+   This submodel sets the global value of the earth attraction constant.
+   This value is defaulted to 9.80665 m/s/s.
+ 
+------------------------------------------------------------------------------
+USAGE :
+ 
+   Use this submodel for modelling different gravity conditions like
+   weightlessness conditions.
+ 
+------------------------------------------------------------------------------
+PARAMETER SETTINGS :
+ 
+   The value of the gravity can be a constant or varying with time. In the
+   second case, a data file must be specified containing values of g against
+   time in a 1D format.
+ 
+------------------------------------------------------------------------------
+DATE OF CREATION / AUTHOR : 15/06/04 OS
+------------------------------------------------------------------------------
+SOURCE :
+
+   This material contains trade secrets or otherwise confidential
+   information owned by Siemens Industry Software Inc. or its
+   affiliates (collectively, "Siemens"), or its licensors. Access to
+   and use of this information is strictly limited as set forth in the
+   Customer's applicable agreements with Siemens.
+   
+   Unpublished work. Copyright 2023 Siemens
+
+******************************************************************************* */
+
+#define _SUBMODELNAME_ "GRAV0DXS"
+
+/* >>>>>>>>>>>>Insert Private Code Here. */
+/* <<<<<<<<<<<<End of Private Code. */
+
+
+/* There are 2 real parameters:
+
+   fixedg constant gravity value [m/s/s]
+   erer   dfdg                   [cm]
+*/
+
+
+/* There are 3 integer parameters:
+
+   gtype setting type          
+   mode  data out of range mode
+   disc  discontinuity handling
+*/
+
+
+/* There is 1 text parameter:
+
+   gfile filename for g = f(t)
+*/
+
+void grav0dxsin_(int *n, double rp[2], int ip[3], char *tp[1]
+      , int ic[1])
+
+{
+   int loop, error;
+/* >>>>>>>>>>>>Extra Initialization Function Declarations Here. */
+   double *x, *y;
+   int num;
+   char *unit_info[] = {"m/s/s", "s"};
+/* <<<<<<<<<<<<End of Extra Initialization declarations. */
+   int gtype, mode, disc;
+   double fixedg, erer;
+   char *gfile;
+
+   gtype      = ip[0];
+   mode       = ip[1];
+   disc       = ip[2];
+
+   fixedg     = rp[0];
+   erer       = rp[1];
+
+   gfile      = tp[0];
+   loop = 0;
+   error = 0;
+
+/*
+   If necessary, check values of the following:
+
+   rp[0..1]
+*/
+
+
+/* >>>>>>>>>>>>Initialization Function Check Statements. */
+
+   if (*n > 1)
+   {
+      amefprintf(stderr, "\nOnly one gravity icon is allowed on the sketch.\n");
+      error = 2;
+   }
+
+   if (gtype == 1)
+   {
+      if (fixedg < 0.0)
+      {
+         amefprintf(stderr, "\nThe value of gravity must be positive.\n");
+         error = 2;
+      }
+      else
+      {
+         setgravity_(&fixedg);
+      }
+   }
+   else
+   {
+      /* Attempt to read file containing data in x and y arrays. */
+
+      rtable1du_(gfile, &num, &x, &y, unit_info);
+
+      if (num == -1)
+      {
+         error = 2;
+      }
+      else
+      {
+         int bcondArray[2];
+
+         /* Initialise a linear spline. */
+
+         bcondArray[0] = mode;
+         bcondArray[1] = mode;
+         ic[0] = ameLinearSplInit1d(num, x, y, bcondArray, disc-1);
+
+         if (ic[0] < 0)
+         {
+            /* An error occured during spline initialization. */
+            error = 2;
+         }
+         else
+         {
+            int one = 1;
+
+            lsplxtime_(&ic[0], &one);
+         }
+
+         /* Free x and y arrays because a copy is done in the spline structure. */
+
+         free(x);
+         free(y);
+      }
+   }
+
+/* <<<<<<<<<<<<End of Initialization Check Statements. */
+
+/*   Integer parameter checking:   */
+
+   if (gtype < 1 || gtype > 2)
+   {
+      amefprintf(stderr, "\nsetting type must be in range [1..2].\n");
+      error = 2;
+   }
+   if (mode < 1 || mode > 3)
+   {
+      amefprintf(stderr, "\ndata out of range mode must be in range [1..3].\n");
+      error = 2;
+   }
+   if (disc < 1 || disc > 2)
+   {
+      amefprintf(stderr, "\ndiscontinuity handling must be in range [1..2].\n");
+      error = 2;
+   }
+
+   if (ameHandleSubmodelError(_SUBMODELNAME_, *n, error))
+   {
+      return;
+   }
+
+
+/* >>>>>>>>>>>>Initialization Function Executable Statements. */
+/* <<<<<<<<<<<<End of Initialization Executable Statements. */
+}
+
+/*  There are 0 ports.
+*/
+
+/*  There is 1 internal variable.
+
+      1 g     value of gravity [m/s/s] basic variable
+*/
+
+void grav0dxs_(int *n, double *g, double rp[2], int ip[3], char *tp[1]
+      , int ic[1], double *t)
+
+{
+   int loop;
+/* >>>>>>>>>>>>Extra Calculation Function Declarations Here. */
+/* <<<<<<<<<<<<End of Extra Calculation declarations. */
+   int gtype, mode, disc;
+   double fixedg, erer;
+   char *gfile;
+
+   gtype      = ip[0];
+   mode       = ip[1];
+   disc       = ip[2];
+
+   fixedg     = rp[0];
+   erer       = rp[1];
+
+   gfile      = tp[0];
+   loop = 0;
+
+/*
+   Set all submodel outputs below:
+
+   *g          = ??;
+*/
+
+
+
+/* >>>>>>>>>>>>Calculation Function Executable Statements. */
+
+   if (gtype == 1)
+   {
+      *g = fixedg;
+   }
+   else
+   {
+      if (spleval_(&ic[0], t, g) == 0)
+      {
+         amefprintf(stderr, "\nError during gravity file interpolation.\n");
+         amefprintf(stderr, "\nFatal error in GRAV0 instance %d.\n", *n);
+         AmeExit(1);
+      }
+      setgravity_(g);
+   }
+/* <<<<<<<<<<<<End of Calculation Executable Statements. */
+}
+

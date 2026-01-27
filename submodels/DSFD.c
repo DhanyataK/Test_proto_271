@@ -1,0 +1,77 @@
+/* Submodel DSFD skeleton created by AME Submodel editing utility
+   Mon Feb 10 14:57:44 2025 */
+
+
+
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include "ameutils.h"
+/* *******************************************************************************
+TITLE :
+
+------------------------------------------------------------------------------
+DESCRIPTION :
+
+------------------------------------------------------------------------------
+USAGE :
+
+------------------------------------------------------------------------------
+PARAMETER SETTINGS :
+
+------------------------------------------------------------------------------
+REVISIONS :
+
+******************************************************************************* */
+
+#define _SUBMODELNAME_ "DSFD"
+
+/* >>>>>>>>>>>>Insert Private Code Here. */
+/* <<<<<<<<<<<<End of Private Code. */
+void dsfdin_(int *n)
+
+{
+   int loop, error;
+/* >>>>>>>>>>>>Extra Initialization Function Declarations Here. */
+/* <<<<<<<<<<<<End of Extra Initialization declarations. */
+   loop = 0;
+   error = 0;
+
+
+/* >>>>>>>>>>>>Initialization Function Check Statements. */
+/* <<<<<<<<<<<<End of Initialization Check Statements. */
+
+   if (ameHandleSubmodelError(_SUBMODELNAME_, *n, error))
+   {
+      return;
+   }
+
+
+/* >>>>>>>>>>>>Initialization Function Executable Statements. */
+/* <<<<<<<<<<<<End of Initialization Executable Statements. */
+}
+
+/*  There is 1 port.
+
+   Port 1 has 0 variables:
+
+*/
+
+/*  There are 0 internal variables.
+
+*/
+
+void dsfd_(int *n)
+
+{
+   int loop;
+/* >>>>>>>>>>>>Extra Calculation Function Declarations Here. */
+/* <<<<<<<<<<<<End of Extra Calculation declarations. */
+   loop = 0;
+
+
+/* >>>>>>>>>>>>Calculation Function Executable Statements. */
+/* <<<<<<<<<<<<End of Calculation Executable Statements. */
+}
+

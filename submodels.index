@@ -1,0 +1,9 @@
+./submodels
+runstats
+&UNNAMED simu
+sim_params
+&SIMP00_MINE simu
+externinput
+&DSFD simu
+gravityicon
+&GRAV0DXS meca
