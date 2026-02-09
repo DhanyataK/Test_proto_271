@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ParameterSet name="Test_proto_271" id="{7fac4950-9cb5-4f5d-a6bb-7ceaad3f85b5}" description="">
+    <ToolInfo ToolName="AMESim">
+        <ToolDetails ToolDetail="AME_VERSION">2604</ToolDetails>
+        <ToolDetails ToolDetail="MAJ">20261</ToolDetails>
+        <ToolDetails ToolDetail="UPDATE">0</ToolDetails>
+        <ToolDetails ToolDetail="HOTFIX">0</ToolDetails>
+    </ToolInfo>
+    <ParameterData name="k">
+        <value type="2">1000</value>
+        <unit>Nm/degree</unit>
+        <description dimension="1">
+            <item>spring stiffness</item>
+        </description>
+    </ParameterData>
+    <ParameterData name="theta">
+        <value type="2">0</value>
+        <unit>degree</unit>
+        <description dimension="1">
+            <item>angular twist in spring</item>
+        </description>
+    </ParameterData>
+</ParameterSet>

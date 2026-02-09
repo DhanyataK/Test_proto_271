@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ParameterSetsIndex ContainerName="Test_proto_271">
+ <ModelParameterSetsGroup/>
+ <SubmodelParameterSetsGroup>
+  <SubmodelParameterSet id="{7fac4950-9cb5-4f5d-a6bb-7ceaad3f85b5}">
+   <Submodel id="RSPR00"/>
+  </SubmodelParameterSet>
+ </SubmodelParameterSetsGroup>
+</ParameterSetsIndex>
