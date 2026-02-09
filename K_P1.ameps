@@ -7,7 +7,7 @@
         <ToolDetails ToolDetail="HOTFIX">0</ToolDetails>
     </ToolInfo>
     <ParameterData name="k">
-        <value type="2">25</value>
+        <value type="2">21225</value>
         <unit>null</unit>
         <description dimension="12">
             <item>constant value</item>
