@@ -9,7 +9,7 @@
     <ParameterData name="k">
         <value type="2">23</value>
         <unit>null</unit>
-        <description dimension="1">
+        <description dimension="1122">
             <item>constant value</item>
         </description>
     </ParameterData>
